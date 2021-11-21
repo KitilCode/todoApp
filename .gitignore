@@ -1,7 +1,7 @@
-twilio/enviornment/.env
-database/config/config.json
-database/seeders
-package-lock.json
+config/config.json
+seeders
 node_modules
-twilio/executions.js 
-twilio/executionsRemove.js
+package-lock.json
+.env
+executions.js
+executionsRemove.js
