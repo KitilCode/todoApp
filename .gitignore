@@ -5,7 +5,3 @@ package-lock.json
 node_modules
 twilio/executions.js 
 twilio/executionsRemove.js
-database
-twilio
-routes
-.sequelizerc
