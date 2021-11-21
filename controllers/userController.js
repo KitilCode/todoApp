@@ -1,6 +1,4 @@
-const helpers = require('../helpers/helper.js');
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
-
+const userHelpers = require('../helpers/userHelpers')
 
 
 const findUser = async (req, res) => {
