@@ -1,3 +1,11 @@
-.env
-config/config.json
-seeders/20211114174710-demo-user.js
+twilio/enviornment/.env
+database/config/config.json
+database/seeders
+package-lock.json
+node_modules
+twilio/executions.js 
+twilio/executionsRemove.js
+database
+twilio
+routes
+.sequelizerc
