@@ -1,5 +1,5 @@
 const {Sequelize, Model, DataTypes} = require('sequelize');
-const config = require('../config/config.json').development;
+const config = require('../../config/config.json').development;
 const TodoList = require('./todolist');
 
 const sequelize = new Sequelize(config.database, config.username, config.password,{
