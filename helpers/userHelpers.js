@@ -5,3 +5,7 @@ const findUser = async (theirPN) => {
     console.log(user);
     return user;
 }
+
+module.exports = {
+    findUser
+}

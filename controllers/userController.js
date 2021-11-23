@@ -1,21 +1,34 @@
-const userHelpers = require('../helpers/userHelpers')
+const userHelpers = require('../helpers/userHelpers');
+const {client, MessagingResponse ,redirectURL} = require('../twilioConstants');
 
 
-const findUser = async (req, res) => {
-    const user = await helpers.findUser(req.body.From);
+const welcome = async (req, res) => {
+    console.log(req)
+    // find user
+    const user = await userHelpers.findUser(req.query.phone_number);
     console.log(
-        `Incoming Message from ${user.firstName}: ${req.body.Body}`
+        `Incoming Message from ${user.firstName}: ${req.query.body}`
     );
-    const response = new MessagingResponse();
-    const message = response.message();
-    message
-        .body(`Welcome ${user.firstName} to the Todo app`);
-    console.log(response.toString())
+
+    // send message to send to user 
+    client.messages
+          .create({
+                  direction: 'outbound-api',
+                  body: `Hi ${user.firstName}, welcome to the todo app`, 
+                  from: '+19038294100', 
+                  to: req.query.phone_number,
+                  redirect: redirectURL,
+          })
+          .then(message => console.log(message));
+
+    // make sure http request is success
+    const twiml = new MessagingResponse();
+    twiml.message('successful http request');
     res.writeHead(200, {'Content-Type': 'text/xml'});
-    res.end(response.toString());
+    res.end(twiml.toString());
 
 }
 
 module.exports= {
-    findUser,
+    welcome,
 }

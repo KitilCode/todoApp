@@ -1,52 +1,110 @@
 {
-    "description": "A New Flow",
-    "states": [
-      {
-        "name": "Trigger",
-        "type": "trigger",
-        "transitions": [
-          {
-            "next": "welcome",
-            "event": "incomingMessage"
-          },
-          {
-            "event": "incomingCall"
-          },
-          {
-            "event": "incomingRequest"
-          }
-        ],
-        "properties": {
-          "offset": {
-            "x": 0,
-            "y": 0
-          }
+  "description": "A New Flow",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "trigger",
+      "transitions": [
+        {
+          "next": "welcome",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "incomingCall"
+        },
+        {
+          "event": "incomingRequest"
         }
-      },
-      {
-        "name": "welcome",
-        "type": "make-http-request",
-        "transitions": [
-          {
-            "event": "success"
-          },
-          {
-            "event": "failed"
-          }
-        ],
-        "properties": {
-          "offset": {
-            "x": -160,
-            "y": 170
-          },
-          "method": "GET",
-          "content_type": "application/x-www-form-urlencoded;charset=utf-8",
-          "url": "n?a"
+      ],
+      "properties": {
+        "offset": {
+          "x": 0,
+          "y": 0
         }
       }
-    ],
-    "initial_state": "Trigger",
-    "flags": {
-      "allow_concurrent_calls": true
+    },
+    {
+      "name": "welcome",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "next": "send_message_2",
+          "event": "success"
+        },
+        {
+          "next": "send_message_1",
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -160,
+          "y": 170
+        },
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [
+          {
+            "value": "{{contact.channel.address}}",
+            "key": "phone_number"
+          },
+          {
+            "value": "{{trigger.message.Body}}",
+            "key": "body"
+          }
+        ],
+        "url": "https://8224-2603-6010-8d02-cf91-9488-36fd-2129-848e.ngrok.io/welcome"
+      }
+    },
+    {
+      "name": "send_message_1",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -70,
+          "y": 390
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "http request failed"
+      }
+    },
+    {
+      "name": "send_message_2",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -470,
+          "y": 410
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "http request was a success"
+      }
     }
+  ],
+  "initial_state": "Trigger",
+  "flags": {
+    "allow_concurrent_calls": true
   }
+}
