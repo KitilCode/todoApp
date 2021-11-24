@@ -3,7 +3,6 @@ const {client, MessagingResponse ,redirectURL} = require('../twilioConstants');
 
 
 const welcome = async (req, res) => {
-    console.log(req)
     // find user
     const user = await userHelpers.findUser(req.query.phone_number);
     console.log(
@@ -11,15 +10,15 @@ const welcome = async (req, res) => {
     );
 
     // send message to send to user 
-    client.messages
-          .create({
-                  direction: 'outbound-api',
-                  body: `Hi ${user.firstName}, welcome to the todo app`, 
-                  from: '+19038294100', 
-                  to: req.query.phone_number,
-                  redirect: redirectURL,
-          })
-          .then(message => console.log(message));
+    await client.messages
+                .create({
+                        direction: 'outbound-api',
+                        body: `Hi ${user.firstName}, welcome to the todo app`, 
+                        from: '+19038294100', 
+                        to: req.query.phone_number,
+                        redirect: redirectURL,
+                })
+                .then(m => console.log(m.sid));
 
     // make sure http request is success
     const twiml = new MessagingResponse();
