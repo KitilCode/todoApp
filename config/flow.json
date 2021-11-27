@@ -298,7 +298,8 @@
             "value": "{{contact.channel.address}}",
             "key": "phone_number"
           }
-        ]
+        ],
+        "url": "n/a"
       }
     }
   ],
