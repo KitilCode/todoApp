@@ -6,11 +6,26 @@ const findAllTodoLists = async (theirPN) => {
     return todoLists;
 }
 
-const findOneTodoList = async (thierPN, listName) => {
+const findOneTodoList = async (listName, theirPN) => {
     const todoList = await TodoList.findOne({where: {
-        userPhoneNumber: thierPN,
         title: listName,
+        userPhoneNumber: theirPN,
     }});
     console.log(todoList);
     return todoList
+}
+
+const createList = async (listName, theirPN) => {
+    const todoList = await TodoList.create({
+        title: listName,
+        userPhoneNumber: theirPN,
+    });
+    console.log(todoList);
+    return todoList;
+}
+
+module.exports = {
+    findAllTodoLists,
+    findOneTodoList,
+    createList,
 }
