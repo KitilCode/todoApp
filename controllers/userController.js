@@ -3,6 +3,7 @@ const {client, MessagingResponse ,redirectURL} = require('../twilioConstants');
 
 
 const welcome = async (req, res) => {
+    //console.log(req.query)
     // find user
     const user = await userHelpers.findUser(req.query.phone_number);
     console.log(

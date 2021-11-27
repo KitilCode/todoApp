@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start:dev": "nodemon ./bin/server.js",
     "postgres": "sudo service postgresql"
   },
@@ -11,7 +11,9 @@
   "author": "Dusk Kitil",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "jest": "^27.3.1",
+    "nodemon": "^2.0.15",
+    "prettier": "2.5.0"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
