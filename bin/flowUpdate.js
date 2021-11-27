@@ -8,7 +8,7 @@ console.log(process.env.FLOW_SID);
 let update = 
     client.studio.flows(process.env.FLOW_SID)
                  .update({commitMessage: 'update create list redirect', definition: flowObject, status: 'draft'})
-                 .then(flow => console.log(flow.friendlyName));
+                 .then(flow => console.log(flow));
 
 update = 
     client.studio.flows(process.env.FLOW_SID)
