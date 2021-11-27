@@ -28,7 +28,7 @@
       "type": "make-http-request",
       "transitions": [
         {
-          "next": "send_message_2",
+          "next": "options",
           "event": "success"
         },
         {
@@ -53,7 +53,7 @@
             "key": "body"
           }
         ],
-        "url": "https://8224-2603-6010-8d02-cf91-9488-36fd-2129-848e.ngrok.io/welcome"
+        "url": "https://253c-2603-6010-8d02-cf91-896e-1080-7673-498c.ngrok.io/welcome"
       }
     },
     {
@@ -69,18 +69,202 @@
       ],
       "properties": {
         "offset": {
-          "x": -70,
-          "y": 390
+          "x": 170,
+          "y": 170
         },
         "service": "{{trigger.message.InstanceSid}}",
         "channel": "{{trigger.message.ChannelSid}}",
         "from": "{{flow.channel.address}}",
         "to": "{{contact.channel.address}}",
-        "body": "http request failed"
+        "body": "http welcome request failed"
+      }
+    },
+    {
+      "name": "options",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "split_2",
+          "event": "incomingMessage"
+        },
+        {
+          "next": "send_and_reply_2",
+          "event": "timeout"
+        },
+        {
+          "next": "send_message_3",
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -300,
+          "y": 390
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Here are the options, create todo list, view todo lists, view all incomplete items",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "split_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "send_message_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "create_list",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value matches_any_of create todo list, create list, list create, todo list create",
+              "arguments": [
+                "{{widgets.options.inbound.Body}}"
+              ],
+              "type": "matches_any_of",
+              "value": "create todo list, create list, list create, todo list create"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.options.inbound.Body}}",
+        "offset": {
+          "x": -880,
+          "y": 610
+        }
+      }
+    },
+    {
+      "name": "send_and_reply_2",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "split_3",
+          "event": "incomingMessage"
+        },
+        {
+          "next": "logging_you_out",
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -230,
+          "y": 640
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Are you still there? please respond yes if so",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "split_3",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "send_and_reply_2",
+          "event": "noMatch"
+        },
+        {
+          "next": "options",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value matches_any_of yes, y",
+              "arguments": [
+                "{{widgets.send_and_reply_2.inbound.Body}}"
+              ],
+              "type": "matches_any_of",
+              "value": "yes,y"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.send_and_reply_2.inbound.Body}}",
+        "offset": {
+          "x": 360,
+          "y": 1020
+        }
+      }
+    },
+    {
+      "name": "logging_you_out",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 820,
+          "y": 1020
+        },
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8"
       }
     },
     {
       "name": "send_message_2",
+      "type": "send-message",
+      "transitions": [
+        {
+          "next": "options",
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1110,
+          "y": 980
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "that is not an option"
+      }
+    },
+    {
+      "name": "create_list",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -570,
+          "y": 990
+        },
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "url": "n/a"
+      }
+    },
+    {
+      "name": "send_message_3",
       "type": "send-message",
       "transitions": [
         {
@@ -92,14 +276,14 @@
       ],
       "properties": {
         "offset": {
-          "x": -470,
-          "y": 410
+          "x": 70,
+          "y": 380
         },
         "service": "{{trigger.message.InstanceSid}}",
         "channel": "{{trigger.message.ChannelSid}}",
         "from": "{{flow.channel.address}}",
         "to": "{{contact.channel.address}}",
-        "body": "http request was a success"
+        "body": "options message failed"
       }
     }
   ],
