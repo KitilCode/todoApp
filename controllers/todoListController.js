@@ -17,7 +17,7 @@ const twilioCreateList = async (req,res) => {
                     to: req.query.phone_number,
                     redirect: redirectURL,
                 })
-                
+
     // make sure http request is success
     const twiml = new MessagingResponse();
     twiml.message('successful http request');
