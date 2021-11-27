@@ -10,11 +10,13 @@ let optionsSplit = flowObject.states[4];
 let isUserActive = flowObject.states[5];
 let isUserActiveSplit = flowObject.states[6];
 let noSuchOption = flowObject.states[7];
-let createListTitle = flowObject.states[8];
-let createList = flowObject.states[9];
+let optionsFail = flowObject.states[8]
+let createListTitle = flowObject.states[9];
+let createList = flowObject.states[10];
 
 // edit widgets 
 welcome.properties.url = ngrokURL + '/welcome';
-createList.properties.url = ngrokURL + 'todoList/create';
+createList.properties.url = ngrokURL + '/todoList/create';
+
 
 module.exports = flowObject;
