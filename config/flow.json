@@ -32,7 +32,7 @@
           "event": "success"
         },
         {
-          "next": "send_message_1",
+          "next": "welcome_fail",
           "event": "failed"
         }
       ],
@@ -53,11 +53,11 @@
             "key": "body"
           }
         ],
-        "url": "https://253c-2603-6010-8d02-cf91-896e-1080-7673-498c.ngrok.io/welcome"
+        "url": "n/a"
       }
     },
     {
-      "name": "send_message_1",
+      "name": "welcome_fail",
       "type": "send-message",
       "transitions": [
         {
@@ -84,21 +84,21 @@
       "type": "send-and-wait-for-reply",
       "transitions": [
         {
-          "next": "split_2",
+          "next": "options_split",
           "event": "incomingMessage"
         },
         {
-          "next": "send_and_reply_2",
+          "next": "is_user_active",
           "event": "timeout"
         },
         {
-          "next": "send_message_3",
+          "next": "options_fail",
           "event": "deliveryFailure"
         }
       ],
       "properties": {
         "offset": {
-          "x": -300,
+          "x": -350,
           "y": 390
         },
         "service": "{{trigger.message.InstanceSid}}",
@@ -109,15 +109,15 @@
       }
     },
     {
-      "name": "split_2",
+      "name": "options_split",
       "type": "split-based-on",
       "transitions": [
         {
-          "next": "send_message_2",
+          "next": "no_such_option",
           "event": "noMatch"
         },
         {
-          "next": "create_list",
+          "next": "create_list_title",
           "event": "match",
           "conditions": [
             {
@@ -140,15 +140,14 @@
       }
     },
     {
-      "name": "send_and_reply_2",
+      "name": "is_user_active",
       "type": "send-and-wait-for-reply",
       "transitions": [
         {
-          "next": "split_3",
+          "next": "is_user_active_split",
           "event": "incomingMessage"
         },
         {
-          "next": "logging_you_out",
           "event": "timeout"
         },
         {
@@ -168,11 +167,11 @@
       }
     },
     {
-      "name": "split_3",
+      "name": "is_user_active_split",
       "type": "split-based-on",
       "transitions": [
         {
-          "next": "send_and_reply_2",
+          "next": "is_user_active",
           "event": "noMatch"
         },
         {
@@ -182,7 +181,7 @@
             {
               "friendly_name": "If value matches_any_of yes, y",
               "arguments": [
-                "{{widgets.send_and_reply_2.inbound.Body}}"
+                "{{widgets.is_user_active.inbound.Body}}"
               ],
               "type": "matches_any_of",
               "value": "yes,y"
@@ -191,7 +190,7 @@
         }
       ],
       "properties": {
-        "input": "{{widgets.send_and_reply_2.inbound.Body}}",
+        "input": "{{widgets.is_user_active.inbound.Body}}",
         "offset": {
           "x": 360,
           "y": 1020
@@ -199,27 +198,7 @@
       }
     },
     {
-      "name": "logging_you_out",
-      "type": "make-http-request",
-      "transitions": [
-        {
-          "event": "success"
-        },
-        {
-          "event": "failed"
-        }
-      ],
-      "properties": {
-        "offset": {
-          "x": 820,
-          "y": 1020
-        },
-        "method": "GET",
-        "content_type": "application/x-www-form-urlencoded;charset=utf-8"
-      }
-    },
-    {
-      "name": "send_message_2",
+      "name": "no_such_option",
       "type": "send-message",
       "transitions": [
         {
@@ -243,28 +222,7 @@
       }
     },
     {
-      "name": "create_list",
-      "type": "make-http-request",
-      "transitions": [
-        {
-          "event": "success"
-        },
-        {
-          "event": "failed"
-        }
-      ],
-      "properties": {
-        "offset": {
-          "x": -570,
-          "y": 990
-        },
-        "method": "GET",
-        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
-        "url": "n/a"
-      }
-    },
-    {
-      "name": "send_message_3",
+      "name": "options_fail",
       "type": "send-message",
       "transitions": [
         {
@@ -284,6 +242,63 @@
         "from": "{{flow.channel.address}}",
         "to": "{{contact.channel.address}}",
         "body": "options message failed"
+      }
+    },
+    {
+      "name": "create_list_title",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "create_list",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -590,
+          "y": 910
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "please respond with what you would like your list to be called",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "create_list",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -600,
+          "y": 1190
+        },
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [
+          {
+            "value": "{{widgets.create_list_title.inbound.Body}}",
+            "key": "title"
+          },
+          {
+            "value": "{{contact.channel.address}}",
+            "key": "phone_number"
+          }
+        ]
       }
     }
   ],
