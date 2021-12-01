@@ -53,7 +53,7 @@
             "key": "body"
           }
         ],
-        "url": "n/a"
+        "url": "https://6127-2603-6010-8d02-cf91-d511-7fcf-6214-b619.ngrok.io/welcome"
       }
     },
     {
@@ -261,8 +261,8 @@
       ],
       "properties": {
         "offset": {
-          "x": -590,
-          "y": 910
+          "x": -570,
+          "y": 880
         },
         "service": "{{trigger.message.InstanceSid}}",
         "channel": "{{trigger.message.ChannelSid}}",
@@ -284,8 +284,8 @@
       ],
       "properties": {
         "offset": {
-          "x": -600,
-          "y": 1190
+          "x": -590,
+          "y": 1160
         },
         "method": "GET",
         "content_type": "application/x-www-form-urlencoded;charset=utf-8",
@@ -299,7 +299,7 @@
             "key": "phone_number"
           }
         ],
-        "url": "n/a"
+        "url": "https://6127-2603-6010-8d02-cf91-d511-7fcf-6214-b619.ngrok.io/todoList"
       }
     }
   ],

@@ -16,7 +16,7 @@ let createList = flowObject.states[10];
 
 // edit widgets 
 welcome.properties.url = ngrokURL + '/welcome';
-createList.properties.url = ngrokURL + '/todoList/create';
+createList.properties.url = ngrokURL + '/todoList';
 
 
 module.exports = flowObject;
