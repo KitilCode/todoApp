@@ -16,6 +16,7 @@ const findOneTodoList = async (listName, theirPN) => {
 }
 
 const createList = async (listName, theirPN) => {
+    console.log('listName in helper',listName)
     const todoList = await TodoList.create({
         title: listName,
         userPhoneNumber: theirPN,

@@ -21,6 +21,7 @@ const twilioCreateList = async (req,res) => {
     // make sure http request is success
     const twiml = new MessagingResponse();
     twiml.message('successful http request');
+    console.log(twiml);
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
 }
