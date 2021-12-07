@@ -32,3 +32,5 @@ TodoItem.belongsTo( TodoList, {
   onDelete: 'CASCADE',
   }
 );
+
+module.exports = TodoItem; 
