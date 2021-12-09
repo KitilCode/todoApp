@@ -122,9 +122,7 @@
           "conditions": [
             {
               "friendly_name": "If value matches_any_of create todo list, create list, list create, todo list create",
-              "arguments": [
-                "{{widgets.options.inbound.Body}}"
-              ],
+              "arguments": ["{{widgets.options.inbound.Body}}"],
               "type": "matches_any_of",
               "value": "create todo list, create list, list create, todo list create"
             }
@@ -180,9 +178,7 @@
           "conditions": [
             {
               "friendly_name": "If value matches_any_of yes, y",
-              "arguments": [
-                "{{widgets.is_user_active.inbound.Body}}"
-              ],
+              "arguments": ["{{widgets.is_user_active.inbound.Body}}"],
               "type": "matches_any_of",
               "value": "yes,y"
             }

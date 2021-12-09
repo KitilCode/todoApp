@@ -1,14 +1,14 @@
-async function up (queryInterface, Sequelize) {
-  await queryInterface.createTable('TodoItems', {
+async function up(queryInterface, Sequelize) {
+  await queryInterface.createTable("TodoItems", {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     title: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     complete: {
       type: Sequelize.BOOLEAN,
@@ -16,29 +16,29 @@ async function up (queryInterface, Sequelize) {
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     todoListId: {
       type: Sequelize.INTEGER,
-      onDelete: 'CASCADE',
+      onDelete: "CASCADE",
       refrences: {
-        model: 'TodoList',
-        key: 'id',
-        as: 'todoListId'
-      }
-    }
+        model: "TodoList",
+        key: "id",
+        as: "todoListId",
+      },
+    },
   });
-};
+}
 
-async function down (queryInterface) {
-  await queryInterface.dropTable('TodoItems');
+async function down(queryInterface) {
+  await queryInterface.dropTable("TodoItems");
 }
 
 module.exports = {
   up,
-  down
-}
+  down,
+};

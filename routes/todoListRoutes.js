@@ -1,7 +1,7 @@
-const todoListController = require('../controllers/todoListController');
+const todoListController = require("../controllers/todoListController");
 
 const todoRoutes = (app) => {
-    app.get('/todoList', todoListController.twilioCreateList)
-}
+  app.get("/todoList", todoListController.twilioCreateList);
+};
 
 module.exports = todoRoutes;
