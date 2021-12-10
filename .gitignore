@@ -5,5 +5,3 @@ package-lock.json
 .env
 executions.js
 executionsRemove.js
-controllers/userController.test.js
-helpers/responseHelper.js
