@@ -15,7 +15,6 @@ const sequelize = new Sequelize(
 class TodoItem extends Model {}
 
 TodoItem.init(
-  "TodoItem",
   {
     title: {
       type: DataTypes.STRING,
